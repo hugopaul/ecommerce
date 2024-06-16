@@ -36,10 +36,9 @@ function renderProductDetail(productId) {
 
         <!-- Customer Reviews -->
         <div class="mt-5">
-            <h3>Avaliações dos Clientes</h3>
+            <h3>Avaliações</h3>
             ${product.reviews.map(review => `
                 <div class="media mb-4">
-                    <img src="https://via.placeholder.com/64" class="mr-3" alt="Customer Image">
                     <div class="media-body">
                         <h5 class="mt-0">${review.name}</h5>
                         <p>${review.comment}</p>
