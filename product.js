@@ -78,7 +78,6 @@ function renderProductDetail(productId) {
 
 // Function to send gift request
 function sendGiftRequest(product) {
-   
     const url = `http://172.233.25.92:8080/api/payments`;
     const body = {
         id: product.id,
@@ -90,7 +89,8 @@ function sendGiftRequest(product) {
     fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Origin': window.location.origin // Adiciona o cabeçalho 'Origin'
         },
         body: JSON.stringify(body)
     })
