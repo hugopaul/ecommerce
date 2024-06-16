@@ -23,7 +23,7 @@ body {
 /* Banner Styles */
 .banner {
     position: relative;
-    background: url('/mnt/data/A_wedding-themed_banner_for_a_website,_with_dimens.png') no-repeat center center;
+    background: url('./fotos/foto1.jpg') no-repeat local center;
     background-size: cover;
     height: 400px;
     display: flex;
@@ -31,7 +31,7 @@ body {
     justify-content: center;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+    }
 
 .banner-content {
     text-align: center;
@@ -71,6 +71,12 @@ footer h5 {
 }
 
 h4 {
+    font-family: 'Dancing Script', cursive;
+    color: #555;
+    border-bottom: 2px solid #e5e5e5;
+    padding-bottom: 10px;
+}
+h5 {
     font-family: 'Dancing Script', cursive;
     color: #555;
     border-bottom: 2px solid #e5e5e5;
@@ -168,6 +174,19 @@ header::after {
 
 /* Responsive Styles */
 @media (max-width: 767px) {
+
+    .banner {
+        position: relative;
+        background: url('./fotos/foto1.jpg') no-repeat top center; /* Changed center center to top center */
+        background-size: cover;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
     .btn-group {
         display: flex;
         flex-direction: column;
