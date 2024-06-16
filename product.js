@@ -78,7 +78,7 @@ function renderProductDetail(productId) {
 
 // Function to send gift request
 function sendGiftRequest(product) {
-    const url = `htts://solidtechsolutions.com.br/api/payments`;
+    const url = `https://solidtechsolutions.com.br/api/payments`;
     const body = {
         id: product.id,
         name: product.name,
