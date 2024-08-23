@@ -36,7 +36,7 @@ function renderPagination(productsToRender = filteredProducts) {
     for (let i = 1; i <= totalPages; i++) {
         const paginationItem = `
             <li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#home-ecommerce" data-page="${i}">${i}</a>
+                <a class="page-link" href="#product-list" data-page="${i}">${i}</a>
             </li>
         `;
         paginationContainer.insertAdjacentHTML('beforeend', paginationItem);
@@ -50,6 +50,9 @@ function renderPagination(productsToRender = filteredProducts) {
             localStorage.setItem('currentPage', currentPage);
             renderProducts(currentPage, productsToRender);
             renderPagination(productsToRender);
+
+            // Scroll to the product-list element
+            document.getElementById('product-list').scrollIntoView({ behavior: 'smooth' });
         });
     });
 }
