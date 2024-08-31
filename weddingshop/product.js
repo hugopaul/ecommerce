@@ -71,18 +71,24 @@ function renderProductDetail(productId) {
 
     // Add event listener to the "Presentear" button
     document.getElementById('gift-button').addEventListener('click', () => {
-        sendGiftRequest(product);
+        $('#giftMessageModal').modal('show');
+    });
+    document.getElementById('sendGiftButton').addEventListener('click', () => {
+        const message = document.getElementById('giftMessage').value;
+        sendGiftRequest(product, message);
     });
 }
 
+
 // Function to send gift request
-function sendGiftRequest(product) {
+function sendGiftRequest(product, message) {
     const url = `https://solidtechsolutions.com.br/api/payments`;
     const body = {
         id: product.id,
         name: product.name,
         price: product.price,
-        description: product.description
+        description: product.description,
+        giftMessage: message
     };
 
     fetch(url, {
