@@ -669,5 +669,21 @@ const products = [
             { name: 'Mônica Souza', comment: 'Café delicioso e fácil de preparar.' },
             { name: 'Gustavo Carvalho', comment: 'Perfeita para amantes de café.' }
         ]
+    },
+    {
+        id: 43,
+        name: 'teste payent',
+        price: '1,00',
+        description: 'Cafeteira Jura automática de alta qualidade para espresso perfeito.',
+        features: [
+            'Moedor integrado',
+            'Vários tipos de café',
+            'Fácil de usar'
+        ],
+        image: './imagens/Cafeteira Espresso.webp',
+        reviews: [
+            { name: 'Mônica Souza', comment: 'Café delicioso e fácil de preparar.' },
+            { name: 'Gustavo Carvalho', comment: 'Perfeita para amantes de café.' }
+        ]
     }
 ];
