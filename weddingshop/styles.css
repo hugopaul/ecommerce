@@ -108,6 +108,13 @@ h5 {
     font-family: 'Dancing Script', cursive;
 }
 
+.btn-outline-primary{
+    background-color: #54794F;
+    border-color: #54794F;
+    font-family: 'Dancing Script', cursive;
+    border-color: #54794F;
+}
+
 .btn-primary:hover {
     background-color: #54794F;
     border-color: #54794F;
