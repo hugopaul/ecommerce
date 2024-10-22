@@ -193,7 +193,7 @@ async function renderProductDetail(productId) {
 
                 <!-- Botões Presentear e Comprar Cotas -->
                 <div class="d-flex">
-                    <button class="btn btn-primary" id="gift-button">Presentear</button>
+                    <button class="btn btn-primary mr-2" id="gift-button">Presentear</button>
                     <button class="btn btn-primary" id="buy-quota-button">Presentear cotas</button>
                 </div>
             </div>
