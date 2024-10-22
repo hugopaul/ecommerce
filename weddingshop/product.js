@@ -42,7 +42,7 @@ async function renderProductDetail(productId) {
                 <p class="text-muted">R$ ${productPrice.toFixed(2)}</p>
                 <p>${product.description || 'Descrição não disponível.'}</p>
 
-                <p><strong>Valor de cada quota:</strong> R$ ${quotaValue.toFixed(2)}</p>
+                <p><strong>Valor de cada cota:</strong> R$ ${quotaValue.toFixed(2)}</p>
 
                 <!-- Barra de Progresso -->
                 <div class="progress mb-3">
@@ -50,7 +50,7 @@ async function renderProductDetail(productId) {
                         ${quotaPercentage.toFixed(2)}%
                     </div>
                 </div>
-                <p>${quotasPurchased} de ${quotasTotals} quotas adquiridas.</p>
+                <p>${quotasPurchased} de ${quotasTotals} cotas adquiridas.</p>
 
                 <button class="btn btn-primary" id="gift-button">Presentear</button>
             </div>
@@ -175,7 +175,7 @@ async function renderProductDetail(productId) {
                 <p class="text-muted">R$ ${productPrice.toFixed(2)}</p>
                 <p>${product.description || 'Descrição não disponível.'}</p>
 
-                <p><strong>Valor de cada quota:</strong> R$ ${quotaValue.toFixed(2)}</p>
+                <p><strong>Valor de cada cota:</strong> R$ ${quotaValue.toFixed(2)}</p>
 
                 <!-- Barra de Progresso -->
                 <div class="progress mb-3">
@@ -183,15 +183,15 @@ async function renderProductDetail(productId) {
                         ${quotaPercentage.toFixed(2)}%
                     </div>
                 </div>
-                <p>${quotasPurchased} de ${quotasTotals} quotas adquiridas.</p>
+                <p>${quotasPurchased} de ${quotasTotals} cotas adquiridas.</p>
 
-                <!-- Campo para selecionar quantidade de quotas -->
+                <!-- Campo para selecionar quantidade de cotas -->
                 <div class="mb-3">
                     <label for="quota-quantity" class="form-label">Quantidade de quotas</label>
                     <input type="number" class="form-control" id="quota-quantity" min="1" max="${quotasTotals - quotasPurchased}" value="1">
                 </div>
 
-                <!-- Botões Presentear e Comprar Quotas -->
+                <!-- Botões Presentear e Comprar Cotas -->
                 <div class="d-flex">
                     <button class="btn btn-primary mr-2" id="gift-button">Presentear</button>
                     <button class="btn btn-secondary" id="buy-quota-button">Comprar Quotas</button>
@@ -239,12 +239,12 @@ async function renderProductDetail(productId) {
 // Função para enviar pedido de compra de quotas
 function buyQuota(product, quotaQuantity) {
     if (quotaQuantity < 1) {
-        alert('A quantidade de quotas deve ser pelo menos 1.');
+        alert('A quantidade de cotas deve ser pelo menos 1.');
         return;
     }
 
     if (quotaQuantity > (product.quotasTotals - product.quotasPurchased)) {
-        alert('A quantidade de quotas excede o número disponível.');
+        alert('A quantidade de cotas excede o número disponível.');
         return;
     }
 
@@ -273,7 +273,7 @@ function buyQuota(product, quotaQuantity) {
         })
         .catch(error => {
             console.error('Erro:', error);
-            alert('Houve um erro ao processar a compra das quotas.');
+            alert('Houve um erro ao processar a compra das cotas.');
         });
 }
 
