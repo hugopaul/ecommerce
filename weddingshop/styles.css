@@ -202,6 +202,10 @@ header::after {
     line-height: 30px;
 }
 
+.col-md-3 {
+    width: 10%; /* 3 colunas de 12 = 25% de largura */
+}
+
 /* Responsive Styles */
 @media (max-width: 767px) {
 
@@ -225,4 +229,5 @@ header::after {
     .btn-group .btn {
         margin-bottom: 10px;
     }
+    
 }
