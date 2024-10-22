@@ -202,7 +202,7 @@ header::after {
     line-height: 30px;
 }
 
-.col-md-3 {
+.input-size {
     width: 10%; /* 3 colunas de 12 = 25% de largura */
 }
 
