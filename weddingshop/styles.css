@@ -103,34 +103,34 @@ h5 {
 }
 
 .btn-primary {
-    background-color: #54794F;
-    border-color: #54794F;
+    background-color: #54794F !important;
+    border-color: #54794F!important;
     font-family: 'Dancing Script', cursive;
 }
 .btn-outline-primary {
-    background-color: #8FA88C; /* Verde suave */
-    border-color: #6D8C68;    /* Tom ligeiramente mais escuro de verde */
+    background-color: #8FA88C !important; /* Verde suave */
+    border-color: #6D8C68 !important;    /* Tom ligeiramente mais escuro de verde */
     font-family: 'Dancing Script', cursive;
     color: #ffffff;           /* Cor do texto em branco para melhor contraste */
     transition: background-color 0.3s ease, border-color 0.3s ease; /* Transição suave */
 }
 
 .btn-outline-primary:hover {
-    background-color: #769675; /* Um verde mais intenso no hover */
-    border-color: #5E7F5B;     /* Bordas mais escuras no hover */
+    background-color: #769675 !important; /* Um verde mais intenso no hover */
+    border-color: #5E7F5B !important;     /* Bordas mais escuras no hover */
 }
 
 /* Estado selected */
 .btn-outline-primary.selected {
-    background-color: #6D8C68; /* Cor mais intensa quando selecionado */
-    border-color: #54794F;     /* Bordas mais escuras no estado selecionado */
+    background-color: #6D8C68 !important; /* Cor mais intensa quando selecionado */
+    border-color: #54794F !important;     /* Bordas mais escuras no estado selecionado */
     color: #FFFFFF;            /* Mantém o texto branco */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra sutil para destaque */
 }
 
 .btn-primary:hover {
-    background-color: #54794F;
-    border-color: #54794F;
+    background-color: #54794F !important;
+    border-color: #54794F !important;
 }
 
 /* Product Image Styles */
