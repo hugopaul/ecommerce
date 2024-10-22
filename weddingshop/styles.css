@@ -103,14 +103,14 @@ h5 {
 }
 
 .btn-primary {
-    background-color: #d4a5a5;
-    border-color: #d4a5a5;
+    background-color: #54794F;
+    border-color: #54794F;
     font-family: 'Dancing Script', cursive;
 }
 
 .btn-primary:hover {
-    background-color: #c49595;
-    border-color: #c49595;
+    background-color: #54794F;
+    border-color: #54794F;
 }
 
 /* Product Image Styles */
@@ -122,16 +122,16 @@ h5 {
 
 /* Pagination Styles */
 .pagination .page-item.active .page-link {
-    background-color: #d4a5a5;
-    border-color: #d4a5a5;
+    background-color: #54794F;
+    border-color: #54794F;
 }
 
 .pagination .page-link {
-    color: #d4a5a5;
+    color: #54794F;
 }
 
 .pagination .page-link:hover {
-    color: #c49595;
+    color: #54794F;
 }
 
 /* Additional Styles */
