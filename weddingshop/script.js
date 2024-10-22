@@ -11,7 +11,6 @@ function hideLoading() {
     document.getElementById('loading-screen').style.display = 'none';
 }
 
-
 function renderProducts(page, productsToRender = filteredProducts) {
     const start = (page - 1) * productsPerPage;
     const end = start + productsPerPage;
@@ -26,11 +25,7 @@ function renderProducts(page, productsToRender = filteredProducts) {
                 <div class="card">
                     <img src="${product.image}" class="card-img-top" alt="${product.name}">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            ${product.name} 
-                            <!-- Icone informativo com tooltip -->
-                            <i class="fas fa-info-circle ml-2" data-toggle="tooltip" data-placement="top" title="${product.quotasTotals - product.quotasPurchased} cotas disponíveis"></i>
-                        </h5>
+                        <h5 class="card-title">${product.name}</h5>
                         <p class="card-text">R$ ${parseFloat(product.price).toFixed(2)}</p>
                         <a href="product.html?id=${product.id}" class="btn btn-primary">Ver Produto</a>
                     </div>
@@ -39,15 +34,7 @@ function renderProducts(page, productsToRender = filteredProducts) {
         `;
         productContainer.insertAdjacentHTML('beforeend', productCard);
     });
-
-    // Inicializar tooltips do Bootstrap
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
 }
-
-
-
 
 function renderPagination(productsToRender = filteredProducts) {
     const totalPages = Math.ceil(productsToRender.length / productsPerPage);
