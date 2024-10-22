@@ -172,6 +172,16 @@ header::after {
     margin-top: 5px;
 }
 
+.progress {
+    height: 30px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    font-size: 1rem;
+    line-height: 30px;
+}
+
 /* Responsive Styles */
 @media (max-width: 767px) {
 

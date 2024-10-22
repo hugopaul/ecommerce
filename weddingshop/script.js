@@ -1,7 +1,7 @@
 // Custom JavaScript for index.html
-const productsPerPage = 12; // Updated to 12 items per page
+const productsPerPage = 12; // Atualizado para 12 itens por página
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
-let filteredProducts = products;
+let filteredProducts = [];
 
 function renderProducts(page, productsToRender = filteredProducts) {
     const start = (page - 1) * productsPerPage;
@@ -42,7 +42,7 @@ function renderPagination(productsToRender = filteredProducts) {
         paginationContainer.insertAdjacentHTML('beforeend', paginationItem);
     }
 
-    // Add click event to pagination links
+    // Adicionar evento de clique nos links de paginação
     document.querySelectorAll('.page-link').forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
@@ -51,7 +51,7 @@ function renderPagination(productsToRender = filteredProducts) {
             renderProducts(currentPage, productsToRender);
             renderPagination(productsToRender);
 
-            // Scroll to the product-list element
+            // Rolagem suave para o elemento product-list
             document.getElementById('product-list').scrollIntoView({ behavior: 'smooth' });
         });
     });
@@ -69,12 +69,12 @@ function sortProducts(criteria) {
             filteredProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
             break;
     }
-    currentPage = 1; // Reset to the first page after sorting
+    currentPage = 1; // Voltar para a primeira página após ordenar
     renderProducts(currentPage);
     renderPagination();
 }
 
-// Add event listeners to sort buttons
+// Adicionar eventos aos botões de ordenação
 document.querySelectorAll('.sort-btn').forEach(button => {
     button.addEventListener('click', () => {
         const sortCriteria = button.getAttribute('data-sort');
@@ -82,6 +82,33 @@ document.querySelectorAll('.sort-btn').forEach(button => {
     });
 });
 
-// Initial render
-renderProducts(currentPage);
-renderPagination();
+async function getAllProducts() {
+    const url = `https://solidtechsolutions.com.br/api/products`;
+    //const url = `http://localhost:8080/api/products`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar os produtos');
+        }
+
+        const products = await response.json();
+        filteredProducts = products; // Atualiza a lista global de produtos filtrados
+
+        // Renderizar produtos e paginação após carregar os produtos
+        renderProducts(currentPage);
+        renderPagination();
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Houve um erro ao buscar os produtos.');
+    }
+}
+
+// Chamada inicial para buscar produtos e renderizar a página
+getAllProducts();
