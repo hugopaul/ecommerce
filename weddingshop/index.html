@@ -13,6 +13,14 @@
 </head>
 
 <body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Carregando...</span>
+        </div>
+    </div>
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a id="home-ecommerce" class="navbar-brand" href="index.html">Wedding Shop</a>
@@ -81,28 +89,30 @@
     </footer>
 
     <!-- Gift Message Modal -->
-<div class="modal fade" id="giftMessageModal" tabindex="-1" role="dialog" aria-labelledby="giftMessageModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="giftMessageModalLabel">Mensagem de Felicidades</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="giftMessage">Escreva sua mensagem de felicidades ao casal:</label>
-                    <textarea class="form-control" id="giftMessage" rows="3" placeholder="Sua mensagem..."></textarea>
+    <div class="modal fade" id="giftMessageModal" tabindex="-1" role="dialog" aria-labelledby="giftMessageModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="giftMessageModalLabel">Mensagem de Felicidades</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="sendGiftButton">Enviar Presente</button>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="giftMessage">Escreva sua mensagem de felicidades ao casal:</label>
+                        <textarea class="form-control" id="giftMessage" rows="3"
+                            placeholder="Sua mensagem..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="sendGiftButton">Enviar Presente</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

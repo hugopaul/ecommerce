@@ -3,6 +3,14 @@ const productsPerPage = 12; // Atualizado para 12 itens por página
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
 let filteredProducts = [];
 
+function showLoading() {
+    document.getElementById('loading-screen').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loading-screen').style.display = 'none';
+}
+
 function renderProducts(page, productsToRender = filteredProducts) {
     const start = (page - 1) * productsPerPage;
     const end = start + productsPerPage;
@@ -87,6 +95,8 @@ async function getAllProducts() {
     //const url = `http://localhost:8080/api/products`;
 
     try {
+        showLoading(); // Exibir a tela de carregamento
+
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -107,6 +117,8 @@ async function getAllProducts() {
     } catch (error) {
         console.error('Erro:', error);
         alert('Houve um erro ao buscar os produtos.');
+    } finally {
+        hideLoading(); // Esconder a tela de carregamento após o carregamento
     }
 }
 
