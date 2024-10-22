@@ -311,7 +311,7 @@ function sendGiftRequest(product) {
 
 // Função que busca produtos relacionados (simulada para fins de exemplo)
 async function getRelatedProducts() {
-    const url = `https://solidtechsolutions.com.br/api/products`;
+    const url = `https://solidtechsolutions.com.br/api/products/random`;
     //const url = `http://localhost:8080/api/products`; // Supondo que esse endpoint retorne todos os produtos, ou produtos relacionados
 
     try {
