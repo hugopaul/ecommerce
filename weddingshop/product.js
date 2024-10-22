@@ -187,14 +187,14 @@ async function renderProductDetail(productId) {
 
                 <!-- Campo para selecionar quantidade de cotas -->
                 <div class="mb-3">
-                    <label for="quota-quantity" class="form-label">Quantidade de quotas</label>
+                    <label for="quota-quantity" class="form-label">Quantidade de cotas</label>
                     <input type="number" class="form-control" id="quota-quantity" min="1" max="${quotasTotals - quotasPurchased}" value="1">
                 </div>
 
                 <!-- Botões Presentear e Comprar Cotas -->
                 <div class="d-flex">
                     <button class="btn btn-primary mr-2" id="gift-button">Presentear</button>
-                    <button class="btn btn-secondary" id="buy-quota-button">Comprar Quotas</button>
+                    <button class="btn btn-secondary" id="buy-quota-button">Comprar cotas</button>
                 </div>
             </div>
         </div>
