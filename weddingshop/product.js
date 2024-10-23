@@ -124,8 +124,8 @@ function sendGiftFully(product) {
         return;
     }
 
-    //const url = `https://solidtechsolutions.com.br/api/payments`;
-    const url = `http://localhost:8080/api/payments`;
+    const url = `https://solidtechsolutions.com.br/api/payments`;
+    //const url = `http://localhost:8080/api/payments`;
 
     const body = {
         id: product.id,
@@ -161,8 +161,8 @@ function sendReviewToProduct(productId) {
     return new Promise((resolve, reject) => {
         const reviewerName = document.getElementById('reviewer-name').value;
         const reviewComment = document.getElementById('review-comment').value;
-
-        const url = `http://localhost:8080/api/products/${productId}/reviews`;
+        const url = `https://solidtechsolutions.com.br/api/products/${productId}/reviews`;
+        //const url = `http://localhost:8080/api/products/${productId}/reviews`;
 
         const body = {
             name: reviewerName,
@@ -200,8 +200,8 @@ function buyQuota(product, quotaQuantity) {
             alert('A quantidade de cotas excede o número disponível.');
             return reject(new Error('Cotas excedidas'));
         }
-
-        const url = `http://localhost:8080/api/payments`;
+        const url = `https://solidtechsolutions.com.br/api/payments`;
+        //const url = `http://localhost:8080/api/payments`;
 
         const body = {
             id: product.id,
@@ -257,7 +257,8 @@ function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
 
 // Função para obter o produto pelo ID
 async function getProductById(productId) {
-    const url = `http://localhost:8080/api/products/${productId}`;
+    const url = `https://solidtechsolutions.com.br/api/products/${productId}`;
+    //const url = `http://localhost:8080/api/products/${productId}`;
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -289,9 +290,10 @@ async function renderRelatedProducts() {
 
     relatedProducts.slice(0, 4).forEach(relatedProduct => {
         const quotasDisponiveis = relatedProduct.quotasTotals - relatedProduct.quotasPurchased;
-        const quotasInfo = quotasDisponiveis != 1
-            ? `<p>${quotasDisponiveis} cotas disponíveis</p>`
-            : '<p>1 cota disponível</p>';
+        const quotaValue = productPrice / quotasTotals;
+        const quotasInfo = quotasDisponiveis != 1 
+            ? `<p>${quotasDisponiveis} cotas disponíveis(R$ ${quotaValue.toFixed(2)} cada).</p>`
+            : '<p>1 cota disponível.</p>';
         const relatedProductCard = `
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
@@ -311,7 +313,8 @@ async function renderRelatedProducts() {
 
 // Função que busca produtos relacionados
 async function getRelatedProducts() {
-    const url = `http://localhost:8080/api/products/random`;
+    const url = `https://solidtechsolutions.com.br/api/products/random`;
+    //const url = `http://localhost:8080/api/products/random`;
     try {
         const response = await fetch(url, {
             method: 'GET',
