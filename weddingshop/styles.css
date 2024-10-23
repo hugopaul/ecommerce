@@ -96,6 +96,9 @@ h5 {
 .card-title {
     font-family: 'Georgia', serif;
     color: #333;
+    white-space: nowrap;       /* Impede a quebra de linha */
+    overflow: hidden;          /* Esconde o texto que ultrapassa os limites */
+    text-overflow: ellipsis;   /* Exibe reticências (...) para o texto que é cortado */
 }
 
 .card-text {
