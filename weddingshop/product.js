@@ -121,8 +121,12 @@ async function renderRelatedProducts() {
         document.getElementById('related-products-section').style.display = 'none'; // Esconde a seção se não houver produtos
         return;
     }
-
+   
     relatedProducts.slice(0, 4).forEach(relatedProduct => {
+        const quotasDisponiveis = relatedProduct.quotasTotals - relatedProduct.quotasPurchased;
+        const quotasInfo = quotasDisponiveis != 1 
+            ? `<p>${quotasDisponiveis} cotas disponíveis</p>`
+            : '<p>1 cota disponível</p>';
         const relatedProductCard = `
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
@@ -130,6 +134,7 @@ async function renderRelatedProducts() {
                     <div class="card-body">
                         <h5 class="card-title">${relatedProduct.name}</h5>
                         <p class="card-text">R$ ${parseFloat(relatedProduct.price).toFixed(2)}</p>
+                        ${quotasInfo} 
                         <a href="product.html?id=${relatedProduct.id}" class="btn btn-primary">Ver Produto</a>
                     </div>
                 </div>
