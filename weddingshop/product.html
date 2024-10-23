@@ -10,7 +10,7 @@
 <body>
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html"> Loja de Presentes</a>
+        <a class="navbar-brand" href="index.html">Loja de Presentes</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -47,10 +47,41 @@
             </div>
         </div>
         <div class="text-center p-3 bg-dark text-white">
-            © 2024  Loja de Presentes. Todos os direitos reservados.
+            © 2024 Loja de Presentes. Todos os direitos reservados.
         </div>
     </footer>
 
+    <!-- Modal para Enviar Avaliação -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Enviar Felicitações</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                   
+                </div>
+                <div class="modal-body">
+                    <p for="reviewer-name">Digite uma mensagem parabenizando o casal.</p>
+                    <form id="review-form">
+                        <div class="form-group">
+                            <label for="reviewer-name">Seu nome</label>
+                            <input type="text" class="form-control" id="reviewer-name" placeholder="Digite seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-comment">Sua mensagem para o casal</label>
+                            <textarea class="form-control" id="review-comment" rows="3" placeholder="Digite sua mensagem" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="submit-review-button">Enviar Felicitações</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

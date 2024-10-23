@@ -98,8 +98,8 @@ document.querySelectorAll('.sort-btn').forEach(button => {
 });
 
 async function getAllProducts() {
-    const url = `https://solidtechsolutions.com.br/api/products`;
-    //const url = `http://localhost:8080/api/products`;
+    //const url = `https://solidtechsolutions.com.br/api/products`;
+    const url = `http://localhost:8080/api/products`;
 
     try {
         showLoading(); // Exibir a tela de carregamento
