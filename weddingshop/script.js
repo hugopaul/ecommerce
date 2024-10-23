@@ -1,5 +1,5 @@
 // Custom JavaScript for index.html
-const productsPerPage = 12; 
+const productsPerPage = 12;
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
 let filteredProducts = [];
 
@@ -20,6 +20,11 @@ function renderProducts(page, productsToRender = filteredProducts) {
     productContainer.innerHTML = '';
 
     productsToShow.forEach(product => {
+        // Verifica se o valor de quotasTotals é maior que 1
+        const quotasInfo = product.quotasTotals > 1
+            ? `<p>${product.quotasTotals - product.quotasPurchased} cotas disponíveis</p>`
+            : '';
+
         const productCard = `
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card">
@@ -27,7 +32,7 @@ function renderProducts(page, productsToRender = filteredProducts) {
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
                         <p class="card-text">R$ ${parseFloat(product.price).toFixed(2)}</p>
-                        <p>${product.quotasTotals - product.quotasPurchased} cotas disponíveis</p>
+                        ${quotasInfo} <!-- Exibe a informação das cotas apenas se quotasTotals > 1 -->
                         <a href="product.html?id=${product.id}" class="btn btn-primary">Ver Produto</a>
                     </div>
                 </div>
