@@ -22,7 +22,7 @@ function renderProducts(page, productsToRender = filteredProducts) {
     productsToShow.forEach(product => {
         // Verifica se o valor de quotasTotals é maior que 1
         const quotasDisponiveis = product.quotasTotals - product.quotasPurchased;
-        const quotaValue = productPrice / quotasTotals;
+        const quotaValue = product.productPrice / product.quotasTotals;
         const quotasInfo = quotasDisponiveis != 1 
             ? `<p>${quotasDisponiveis} cotas disponíveis(R$ ${quotaValue.toFixed(2)} cada).</p>`
             : '<p>1 cota disponível.</p>';

@@ -290,7 +290,7 @@ async function renderRelatedProducts() {
 
     relatedProducts.slice(0, 4).forEach(relatedProduct => {
         const quotasDisponiveis = relatedProduct.quotasTotals - relatedProduct.quotasPurchased;
-        const quotaValue = productPrice / quotasTotals;
+        const quotaValue = relatedProduct.productPrice / relatedProduct.quotasTotals;
         const quotasInfo = quotasDisponiveis != 1 
             ? `<p>${quotasDisponiveis} cotas disponíveis(R$ ${quotaValue.toFixed(2)} cada).</p>`
             : '<p>1 cota disponível.</p>';
