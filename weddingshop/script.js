@@ -26,8 +26,8 @@ function renderProducts(page, productsToRender = filteredProducts) {
         const quotasTotals = parseInt(product.quotasTotals, 10);
         const productPrice = parseFloat(product.price);
         const quotaValue = productPrice / quotasTotals;
-        const quotasInfo = quotasDisponiveis != 1 
-            ? `<p>${quotasDisponiveis} cotas disponíveis(R$ ${quotaValue.toFixed(2)} cada).</p>`
+        const quotasInfo = quotasDisponiveis != 1
+            ? `<p>${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2)}.</p>`
             : '<p>1 cota disponível.</p>';
 
         const productCard = `
