@@ -285,6 +285,11 @@ function buyQuota(product, quotaQuantity) {
 
 // Função para enviar pedido de presente
 function sendGiftRequest(product) {
+    if (product.quotasTotals - product.quotasPurchased == 0) {
+        alert('A quantidade de cotas excede o número disponível.');
+        return;
+    }
+
     const url = `https://solidtechsolutions.com.br/api/payments`;
     //const url = `http://localhost:8080/api/payments`;
 
