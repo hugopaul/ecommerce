@@ -27,6 +27,7 @@ function renderProducts(page, productsToRender = filteredProducts) {
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
                         <p class="card-text">R$ ${parseFloat(product.price).toFixed(2)}</p>
+                        <p>${product.quotasTotals - product.quotasPurchased} cotas disponíveis</p>
                         <a href="product.html?id=${product.id}" class="btn btn-primary">Ver Produto</a>
                     </div>
                 </div>
