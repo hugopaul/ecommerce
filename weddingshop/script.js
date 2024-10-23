@@ -1,5 +1,5 @@
 // Custom JavaScript for index.html
-const productsPerPage = 12; // Atualizado para 12 itens por página
+const productsPerPage = 12; 
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
 let filteredProducts = [];
 
