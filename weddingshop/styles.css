@@ -209,28 +209,30 @@ header::after {
     width: 10%; /* 3 colunas de 12 = 25% de largura */
 }
 
-/* Responsive Styles */
+/* Estilos responsivos para dispositivos móveis */
 @media (max-width: 767px) {
-
-    .banner {
-        position: relative;
-        background: url('./fotos/foto1.jpg') no-repeat top center; /* Changed center center to top center */
-        background-size: cover;
-        height: 400px;
+    /* Ajuste das colunas de produtos */
+    .card {
         display: flex;
+        flex-direction: row;
         align-items: center;
-        justify-content: center;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    .btn-group {
-        display: flex;
-        flex-direction: column;
+    .card-img-top {
+        width: 40%;
+        height: auto;
     }
-    
-    .btn-group .btn {
-        margin-bottom: 10px;
+
+    .card-body {
+        width: 60%;
+        padding-left: 15px;
     }
-    
+
+    .card-body .card-title {
+        text-align: left;
+    }
+
+    .card-body .card-text {
+        text-align: left;
+    }
 }
