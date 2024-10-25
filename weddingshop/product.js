@@ -295,7 +295,7 @@ async function renderRelatedProducts() {
         const productPrice = parseFloat(relatedProduct.price);
         const quotaValue = productPrice / quotasTotals;
         const quotasInfo = quotasDisponiveis != 1 
-            ? `<p class="card-text">${quotasDisponiveis} cotas deR$ ${quotaValue.toFixed(2).replace('.', ',')}</p>`
+            ? `<p class="card-text">${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2).replace('.', ',')}</p>`
             : `<p class="card-text">1 cota de R$${parseFloat(relatedProduct.price).toFixed(2).replace('.', ',')}</p>`;
         const relatedProductCard = `
             <div class="col-md-3 col-sm-6 mb-4">
