@@ -1,3 +1,5 @@
+const urlBase = "http://localhost:8080";
+
 // Função para obter parâmetro da query string
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -58,7 +60,7 @@ async function renderProductDetail(productId) {
                 </div>
 
                 <!-- Botões Presentear e Comprar Cotas -->
-                <div class="d-flex">
+                <div class="d-flex" id="floating-buttons">
                     <button class="btn btn-primary mr-2" id="gift-button">Presentear</button>
                     <button class="btn btn-primary" id="buy-quota-button">Presentear cotas</button>
                 </div>
@@ -68,15 +70,15 @@ async function renderProductDetail(productId) {
         <!-- Avaliações dos clientes -->
         <div class="mt-5">
             <h3>Mensagens</h3>
-            ${filterReviews(product) ? product.reviews.map(review => review.enable ? 
-                        `<div class="media mb-4">
+            ${filterReviews(product) ? product.reviews.map(review => review.enable ?
+        `<div class="media mb-4">
                             <div class="media-body">
                                 <h5 class="mt-0">${review.name}</h5>
                                 <p>${review.comment}</p>
                             </div>
                         </div>
                     `: ``).join('')
-                    : '<p>Nenhuma avaliação disponível.</p>'}
+            : '<p>Nenhuma avaliação disponível.</p>'}
         </div>
 
         <!-- Produtos Relacionados -->
@@ -125,9 +127,7 @@ function sendGiftFully(product) {
         return;
     }
 
-    const url = `https://solidtechsolutions.com.br/api/payments`;
-    //const url = `http://localhost:8080/api/payments`;
-
+    const url = `${urlBase}/api/payments`;
     const body = {
         id: product.id,
         name: product.name,
@@ -162,8 +162,7 @@ function sendReviewToProduct(productId) {
     return new Promise((resolve, reject) => {
         const reviewerName = document.getElementById('reviewer-name').value;
         const reviewComment = document.getElementById('review-comment').value;
-        const url = `https://solidtechsolutions.com.br/api/products/${productId}/reviews`;
-        //const url = `http://localhost:8080/api/products/${productId}/reviews`;
+        const url = `${urlBase}/api/products/${productId}/reviews`;
 
         const body = {
             name: reviewerName,
@@ -201,8 +200,7 @@ function buyQuota(product, quotaQuantity) {
             alert('A quantidade de cotas excede o número disponível.');
             return reject(new Error('Cotas excedidas'));
         }
-        const url = `https://solidtechsolutions.com.br/api/payments`;
-        //const url = `http://localhost:8080/api/payments`;
+        const url = `${urlBase}/api/payments`;
 
         const body = {
             id: product.id,
@@ -259,8 +257,7 @@ function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
 
 // Função para obter o produto pelo ID
 async function getProductById(productId) {
-    const url = `https://solidtechsolutions.com.br/api/products/${productId}`;
-    //const url = `http://localhost:8080/api/products/${productId}`;
+    const url = `${urlBase}/api/products/${productId}`;
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -296,7 +293,7 @@ async function renderRelatedProducts() {
         const quotasTotals = parseInt(relatedProduct.quotasTotals, 10);
         const productPrice = parseFloat(relatedProduct.price);
         const quotaValue = productPrice / quotasTotals;
-        const quotasInfo = quotasDisponiveis != 1 
+        const quotasInfo = quotasDisponiveis != 1
             ? `<p class="card-text">${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2).replace('.', ',')}</p>`
             : `<p class="card-text">1 cota de R$${parseFloat(relatedProduct.price).toFixed(2).replace('.', ',')}</p>`;
         const relatedProductCard = `
@@ -317,8 +314,7 @@ async function renderRelatedProducts() {
 
 // Função que busca produtos relacionados
 async function getRelatedProducts() {
-    const url = `https://solidtechsolutions.com.br/api/products/random`;
-    //const url = `http://localhost:8080/api/products/random`;
+    const url = `${urlBase}/api/products/random`;
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -359,3 +355,20 @@ if (productId) {
         <a href="index.html" class="btn btn-primary">Ir para Home</a>
     `;
 }
+
+
+
+
+window.addEventListener('scroll', () => {
+    const footer = document.getElementById('reserved-rights');
+    const floatingButtons = document.getElementById('floating-buttons');
+    const footerRect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Se o footer estiver visível
+    if (footerRect.top < windowHeight && footerRect.bottom >= 0) {
+        floatingButtons.style.bottom = `${footerRect.height}px`; // Sobe o botão flutuante até o topo do footer
+    } else {
+        floatingButtons.style.bottom = '0'; // Volta a posição original
+    }
+});

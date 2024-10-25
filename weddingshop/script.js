@@ -1,3 +1,4 @@
+const urlBase = "http://localhost:8080";
 // Custom JavaScript for index.html
 const productsPerPage = 12;
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
@@ -101,8 +102,7 @@ document.querySelectorAll('.sort-btn').forEach(button => {
 });
 
 async function getAllProducts() {
-    const url = `https://solidtechsolutions.com.br/api/products`;
-    //const url = `http://localhost:8080/api/products`;
+    const url = `${urlBase}/api/products`;
 
     try {
         showLoading(); // Exibir a tela de carregamento

@@ -31,7 +31,7 @@ body {
     justify-content: center;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
+}
 
 .banner-content {
     text-align: center;
@@ -47,9 +47,12 @@ body {
 }
 
 /* Footer Styles */
+/* Footer verdadeiro */
 footer {
+    position: relative;
     background-color: #f9f9f9;
     color: #333;
+    text-align: center;
 }
 
 footer a {
@@ -65,6 +68,27 @@ footer h5 {
     font-size: 1.5rem;
 }
 
+/* Botões flutuantes sobem quando o footer aparece */
+footer:in-viewport {
+    display: block;
+}
+
+/* Barra fixa ao final da página */
+#floating-buttons {
+    position: fixed;
+    bottom: 0; /* Alinhado ao final da página */
+    height: 100px;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Fica acima de outros elementos */
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+    padding: 10px 20px; /* Espaçamento interno para os botões */
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil na parte superior */
+    display: flex; /* Usando flex para alinhar os botões */
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    transition: bottom 0.3s ease; /* Suave transição para quando subir */
+}
+
 /* Main Content Styles */
 .container {
     margin-top: 20px;
@@ -76,6 +100,7 @@ h4 {
     border-bottom: 2px solid #e5e5e5;
     padding-bottom: 10px;
 }
+
 h5 {
     font-family: 'Dancing Script', cursive;
     color: #555;
@@ -107,9 +132,10 @@ h5 {
 
 .btn-primary {
     background-color: #54794F !important;
-    border-color: #54794F!important;
+    border-color: #54794F !important;
     font-family: 'Dancing Script', cursive;
 }
+
 .btn-outline-primary {
     background-color: #8FA88C !important; /* Verde suave */
     border-color: #6D8C68 !important;    /* Tom ligeiramente mais escuro de verde */
@@ -134,6 +160,36 @@ h5 {
 .btn-primary:hover {
     background-color: #54794F !important;
     border-color: #54794F !important;
+}
+
+/* Botões flutuantes (Presentear e Presentear cotas) */
+#floating-buttons {
+    position: fixed; /* Mantém os botões fixos na tela */
+    bottom: 20px; /* Distância do rodapé */
+    right: 20px; /* Distância do lado direito */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#floating-buttons .btn {
+    margin-right: 10px;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 767px) {
+    #floating-buttons {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px;
+    }
+
+    #floating-buttons .btn {
+        font-size: 14px;
+        margin-right: 5px;
+    }
 }
 
 /* Product Image Styles */
