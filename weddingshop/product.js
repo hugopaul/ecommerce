@@ -7,6 +7,7 @@ function getQueryParam(param) {
 // Função para renderizar detalhes do produto
 async function renderProductDetail(productId) {
     const product = await getProductById(productId);
+    hideLoading()
     const productDetailContainer = document.getElementById('product-detail');
 
     if (!product) {
@@ -232,6 +233,7 @@ function buyQuota(product, quotaQuantity) {
 
 // Função que aciona as duas funções de forma independente
 function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
+    showLoading();
     Promise.allSettled([
         sendReviewToProduct(productId),
         isFully ? sendGiftFully(product) : buyQuota(product, quotaQuantity)
@@ -245,7 +247,7 @@ function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
                     }
                 }
             });
-
+            hideLoading()
 
             // Fecha o modal após ambas as operações concluírem
             $('#reviewModal').modal('hide');
@@ -335,6 +337,16 @@ async function getRelatedProducts() {
         return [];
     }
 }
+
+function showLoading() {
+    document.getElementById('loading-screen').style.display = 'flex';
+}
+
+
+function hideLoading() {
+    document.getElementById('loading-screen').style.display = 'none';
+}
+
 
 // Obtém o ID do produto da URL e renderiza os detalhes do produto
 const productId = getQueryParam('id');
