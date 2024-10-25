@@ -37,10 +37,10 @@ async function renderProductDetail(productId) {
             </div>
             <div class="col-md-6">
                 <h2>${product.name}</h2>
-                <p class="text-muted">R$ ${productPrice.toFixed(2)}</p>
+                <p class="text-muted">R$ ${productPrice.toFixed(2).replace('.', ',')}</p>
                 <p>${product.description || 'Descrição não disponível.'}</p>
 
-                <p><strong>Valor de cada cota:</strong> R$ ${quotaValue.toFixed(2)}</p>
+                <p><strong>Valor de cada cota:</strong> R$ ${quotaValue.toFixed(2).replace('.', ',')}</p>
 
                 <!-- Barra de Progresso -->
                 <div class="progress mb-3">
@@ -295,15 +295,14 @@ async function renderRelatedProducts() {
         const productPrice = parseFloat(relatedProduct.price);
         const quotaValue = productPrice / quotasTotals;
         const quotasInfo = quotasDisponiveis != 1 
-            ? `<p>${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2)}.</p>`
-            : '<p>1 cota disponível.</p>';
+            ? `<p class="card-text">${quotasDisponiveis} cotas deR$ ${quotaValue.toFixed(2).replace('.', ',')}</p>`
+            : `<p class="card-text">1 cota de R$${parseFloat(relatedProduct.price).toFixed(2).replace('.', ',')}</p>`;
         const relatedProductCard = `
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
                     <img src="${relatedProduct.image}" class="card-img-top" alt="${relatedProduct.name}">
                     <div class="card-body">
-                        <h5 class="card-title">${relatedProduct.name}</h5>
-                        <p class="card-text">R$ ${parseFloat(relatedProduct.price).toFixed(2)}</p>
+                    <h5 class="card-title">${relatedProduct.name}</h5>
                         ${quotasInfo} 
                         <a href="product.html?id=${relatedProduct.id}" class="btn btn-primary">Ver Produto</a>
                     </div>

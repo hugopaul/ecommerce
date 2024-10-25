@@ -27,16 +27,15 @@ function renderProducts(page, productsToRender = filteredProducts) {
         const productPrice = parseFloat(product.price);
         const quotaValue = productPrice / quotasTotals;
         const quotasInfo = quotasDisponiveis != 1
-            ? `<p>${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2)}.</p>`
-            : '<p>1 cota disponível.</p>';
+            ? `<p class="card-text">${quotasDisponiveis} cotas de R$${quotaValue.toFixed(2).replace('.', ',')}</p>`
+            : `<p class="card-text">1 cota de R$${parseFloat(product.price).toFixed(2).replace('.', ',')}</p>`;
 
         const productCard = `
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card">
                     <img src="${product.image}" class="card-img-top" alt="${product.name}">
                     <div class="card-body">
-                        <h5 class="card-title">${product.name}</h5>
-                        <p class="card-text">R$ ${parseFloat(product.price).toFixed(2)}</p>
+                    <h5 class="card-title">${product.name}</h5>
                         ${quotasInfo} <!-- Exibe a informação das cotas apenas se quotasTotals > 1 -->
                         <a href="product.html?id=${product.id}" class="btn btn-primary">Ver Produto</a>
                     </div>
