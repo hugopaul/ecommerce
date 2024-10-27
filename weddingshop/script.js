@@ -1,5 +1,5 @@
-//const urlBase = "https://solidtechsolutions.com.br";
-const urlBase = "http://localhost:8080";
+const urlBase = "https://solidtechsolutions.com.br";
+//const urlBase = "http://localhost:8080";
 
 // Custom JavaScript for index.html
 const productsPerPage = 12;

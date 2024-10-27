@@ -1,19 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Presentes</title>
-    
-    <!-- Favicon -->
-    <link href="imagens/favicon.ico" rel="icon">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>Kamyla & Lourival</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="51">
 
     <!-- Loading Screen -->
     <div id="loading-screen"
@@ -22,37 +36,32 @@
             <span class="sr-only">Carregando...</span>
         </div>
     </div>
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a id="home-ecommerce" class="navbar-brand" href="index.html">Loja de Presentes</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar fixed-top shadow-sm navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5"
+        style="margin-bottom: 60px !important">
+        <a href="index.html" class="navbar-brand d-block d-lg-none nav-item">
+            <img class="position-absolute" src="img/Brasao.png"
+                style="height: 75px;width: 75px;left: 0px;top: 0px;right: 0px;bottom: 0px;">
+        </a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://kamylaelourival.com.br/">Voltar para Site do Casamento</a>
-                </li>
-            </ul>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav ml-auto py-0">
+                <a href="#home" class="nav-item nav-link active">Home</a>
+                <a href="https://kamylaelourival.com.br/" class="nav-item nav-link">Site do Casamento</a>
+                <a href="index.html" class="navbar-brand mx-5 d-none d-lg-block"><img src="img/Brasao.png"
+                        class="nav-item" style="height: 75px; width: 75px;"></a>
+            </div>
         </div>
     </nav>
 
-    <!-- Banner Section -->
-    <div class="banner">
-    </div>
-    <div class="container p-4">
-        <div class="row">
-            <div class="col-md-12 mb-md-0  mb-0">
-                <h5 class="text-uppercase">Sobre Nós</h5>
-                <p>Acreditamos que os presentes de casamento são uma forma de celebrar o amor e a união.
-                    Nossa missão é oferecer presentes que reflitam elegância, sofisticação e carinho, tornando esta
-                    união ainda mais especial.</p>
-            </div>
-        </div>
-    </div>
+
+
     <!-- Sort Section -->
-    <div class="container mt-0">
+    <div class="container mt-0" style="margin-top: 120px !important">
         <div class="row">
             <div class="col-12 mb-4">
                 <h4>Ordenar Por</h4>
@@ -82,17 +91,81 @@
         </ul>
     </nav>
 
-    <!-- Footer -->
-    <footer class="bg-light text-center text-lg-start">
-        <div class="text-center p-3 bg-dark text-white">
-            © 2024  Loja de Presentes. Todos os direitos reservados.
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white py-5" id="contact" style="margin-top: 90px;">
+        <div class="container text-center py-5">
+            <div class="section-title position-relative text-center">
+                <h1 class="font-secondary display-3 text-white">Muito obrigado!</h1>
+                <i class="far fa-heart text-white"></i>
+            </div>
+            <p class="m-0">&copy; <a class="text-primary" href="#">Kamyla e Lourival</a>
+            </p>
         </div>
-    </footer>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Scroll to Bottom -->
+    <i class="fa fa-2x fa-angle-down text-white scroll-to-bottom"></i>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-outline-primary btn-lg-square back-to-top"><i
+            class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+
     <script src="script.js"></script>
+    <script>
+        const targetDate = new Date('2024-12-20T16:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            // Cálculo de tempo restante em dias, horas, minutos e segundos
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            // Atualiza todos os elementos com a classe correspondente
+            document.querySelectorAll('.days').forEach(element => {
+                element.innerText = days;
+            });
+            document.querySelectorAll('.hours').forEach(element => {
+                element.innerText = hours;
+            });
+            document.querySelectorAll('.minutes').forEach(element => {
+                element.innerText = minutes;
+            });
+            document.querySelectorAll('.seconds').forEach(element => {
+                element.innerText = seconds;
+            });
+
+            // Se o countdown terminar
+            if (difference < 0) {
+                clearInterval(interval);
+                document.querySelectorAll('.days, .hours, .minutes, .seconds').forEach(element => {
+                    element.innerText = 0;
+                });
+            }
+        }
+
+        // Atualiza o countdown a cada segundo
+        const interval = setInterval(updateCountdown, 1000);
+
+    </script>
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
-//const urlBase = "https://solidtechsolutions.com.br";
-const urlBase = "http://localhost:8080";
+const urlBase = "https://solidtechsolutions.com.br";
+//const urlBase = "http://localhost:8080";
 
 // Função para obter parâmetro da query string
 function getQueryParam(param) {
@@ -35,35 +35,38 @@ async function renderProductDetail(productId) {
     const quotaPercentage = (quotasPurchased / quotasTotals) * 100;
 
     const productDetail = `
-        <div class="row">
+        <div class="row align-items-start">
             <div class="col-md-6">
-                <img src="${product.image}" class="img-fluid" alt="${product.name}">
+                <img src="${product.image}" class="img-fluid rounded mb-3" alt="${product.name}">
             </div>
             <div class="col-md-6">
-                <h2>${product.name}</h2>
-                <p class="text-muted">R$ ${productPrice.toFixed(2).replace('.', ',')}</p>
-                <p>${product.description || 'Descrição não disponível.'}</p>
+                <h2 class="mb-2">${product.name}</h2>
+                <p class="text-muted h5">R$ ${productPrice.toFixed(2).replace('.', ',')}</p>
+                <p class="mb-4">${product.description || 'Descrição não disponível.'}</p>
 
                 <p><strong>Valor de cada cota:</strong> R$ ${quotaValue.toFixed(2).replace('.', ',')}</p>
 
                 <!-- Barra de Progresso -->
-                <div class="progress mb-3">
+                <div class="progress mb-3" style="height: 25px;">
                     <div class="progress-bar bg-success" role="progressbar" style="width: ${quotaPercentage}%" aria-valuenow="${quotaPercentage}" aria-valuemin="0" aria-valuemax="100">
                         ${quotaPercentage.toFixed(2)}%
                     </div>
                 </div>
-                <p>${quotasPurchased} de ${quotasTotals} cotas adquiridas.</p>
+                <p class="mb-4">${quotasPurchased} de ${quotasTotals} cotas adquiridas.</p>
 
                 <!-- Campo para selecionar quantidade de cotas -->
-                <div class="mb-3">
+               <div class="mb-4">
                     <label for="quota-quantity" class="form-label">Quantidade de cotas</label>
-                    <input type="tel" class="form-control input-size" id="quota-quantity" min="1" max="${quotasTotals - quotasPurchased}" value="1">
+                    <div class="d-flex align-items-center">
+                        <input type="tel" class="form-control" id="quota-quantity" min="1" max="${quotasTotals - quotasPurchased}" value="1" style="margin-right: 25px !important">
+                        <button class="btn btn-primary" id="buy-quota-button">Presentear cotas</button>
+                    </div>
                 </div>
 
                 <!-- Botões Presentear e Comprar Cotas -->
-                <div class="d-flex" id="floating-buttons">
-                    <button class="btn btn-primary mr-2" id="gift-button">Presentear</button>
-                    <button class="btn btn-primary" id="buy-quota-button">Presentear cotas</button>
+                <div class="d-flex">
+                    <button class="btn btn-primary me-2" id="gift-button">Presentear</button>
+                    <!-- Caso deseje adicionar mais botões, eles podem ser inseridos aqui com espaçamento -->
                 </div>
             </div>
         </div>
@@ -109,8 +112,23 @@ async function renderProductDetail(productId) {
         });
     });
 
+    // Aplica o atributo disabled conforme a condição
+    const quotaQuantityInput = document.getElementById('quota-quantity');
+    const buyQuotaButton = document.getElementById('buy-quota-button');
+
+    if (isDisabled(quotasTotals)) {
+        quotaQuantityInput.setAttribute('disabled', true);
+        buyQuotaButton.setAttribute('disabled', true);
+    } else {
+        quotaQuantityInput.removeAttribute('disabled');
+        buyQuotaButton.removeAttribute('disabled');
+    }
     // Carregar e renderizar produtos relacionados
     renderRelatedProducts();
+}
+
+function isDisabled(quotasTotals) {
+    return quotasTotals == 1;
 }
 
 
@@ -360,16 +378,16 @@ if (productId) {
 
 
 
-window.addEventListener('scroll', () => {
-    const footer = document.getElementById('reserved-rights');
-    const floatingButtons = document.getElementById('floating-buttons');
-    const footerRect = footer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // Se o footer estiver visível
-    if (footerRect.top < windowHeight && footerRect.bottom >= 0) {
-        floatingButtons.style.bottom = `${footerRect.height}px`; // Sobe o botão flutuante até o topo do footer
-    } else {
-        floatingButtons.style.bottom = '0'; // Volta a posição original
-    }
-});
+//window.addEventListener('scroll', () => {
+//    const footer = document.getElementById('reserved-rights');
+//    const floatingButtons = document.getElementById('floating-buttons');
+//    const footerRect = footer.getBoundingClientRect();
+//    const windowHeight = window.innerHeight;
+//
+//    // Se o footer estiver visível
+//    if (footerRect.top < windowHeight && footerRect.bottom >= 0) {
+//        floatingButtons.style.bottom = `${footerRect.height}px`; // Sobe o botão flutuante até o topo do footer
+//    } else {
+//        floatingButtons.style.bottom = '0'; // Volta a posição original
+//    }
+//});
