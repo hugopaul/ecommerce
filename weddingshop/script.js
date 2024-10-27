@@ -1,4 +1,6 @@
-const urlBase = "https://solidtechsolutions.com.br";
+//const urlBase = "https://solidtechsolutions.com.br";
+const urlBase = "http://localhost:8080";
+
 // Custom JavaScript for index.html
 const productsPerPage = 12;
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;

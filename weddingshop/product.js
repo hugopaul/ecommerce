@@ -1,4 +1,5 @@
-const urlBase = "https://solidtechsolutions.com.br";
+//const urlBase = "https://solidtechsolutions.com.br";
+const urlBase = "http://localhost:8080";
 
 // Função para obter parâmetro da query string
 function getQueryParam(param) {
