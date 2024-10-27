@@ -141,11 +141,7 @@ function filterReviews(product) {
 
 // Função para enviar pedido de presente
 function sendGiftFully(product) {
-    if (product.quotasTotals - product.quotasPurchased == 0) {
-        alert('A quantidade de cotas excede o número disponível.');
-        return;
-    }
-
+    
     const url = `${urlBase}/api/payments`;
     const body = {
         id: product.id,
