@@ -143,14 +143,15 @@ function filterReviews(product) {
 }
 
 // Função para enviar pedido de presente
-function sendGiftFully(product) {
+function sendGiftFully(product, reviewIdCreated) {
     
     const url = `${urlBase}/api/payments`;
     const body = {
         id: product.id,
         name: product.name,
         price: product.price,
-        description: product.description
+        description: product.description,
+        idReview: reviewIdCreated
     };
 
     fetch(url, {
@@ -175,39 +176,49 @@ function sendGiftFully(product) {
 function openReviewModal() {
     $('#reviewModal').modal('show');
 }
-// Função para adicionar avaliação ao produto
-function sendReviewToProduct(productId) {
-    return new Promise((resolve, reject) => {
-        const reviewerName = document.getElementById('reviewer-name').value;
-        const reviewComment = document.getElementById('review-comment').value;
-        const url = `${urlBase}/api/products/${productId}/reviews`;
+// Função para enviar o review ao produto
+async function sendReviewToProduct(productId) {
+    const reviewerName = document.getElementById('reviewer-name').value;
+    const reviewComment = document.getElementById('review-comment').value;
+    const url = `${urlBase}/api/products/${productId}/reviews`;
 
-        const body = {
-            name: reviewerName,
-            comment: reviewComment,
-            enable: false
-        };
+    const body = {
+        name: reviewerName,
+        comment: reviewComment,
+        enable: false
+    };
 
-        fetch(url, {
+    try {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
-        })
-            .then(response => response.text())
-            .then(data => {
-                resolve(data); // Sucesso
-            })
-            .catch(error => {
-                console.error('Erro ao salvar mensagem:', error);
-                reject(error); // Falha
-            });
-    });
+        });
+
+        const data = await response.json();
+        return getMostRecentReviewId(data); // Retorna o ID do review mais recente
+
+    } catch (error) {
+        console.error('Erro ao salvar mensagem:', error);
+        throw error; // Propaga o erro para o método de chamada
+    }
 }
 
+function getMostRecentReviewId(data) {
+    if (!data.reviews || data.reviews.length === 0) return null;
+
+    const mostRecentReview = data.reviews.reduce((latest, current) => {
+        return new Date(current.dataReview) > new Date(latest.dataReview) ? current : latest;
+    });
+
+    return mostRecentReview.id;
+}
+
+
 // Função para enviar pedido de compra de quotas
-function buyQuota(product, quotaQuantity) {
+function buyQuota(product, quotaQuantity, reviewIdCreated) {
     return new Promise((resolve, reject) => {
         if (quotaQuantity < 1) {
             alert('A quantidade de cotas deve ser pelo menos 1.');
@@ -226,7 +237,8 @@ function buyQuota(product, quotaQuantity) {
             pricePerQuota: parseInt(product.price) / parseInt(product.quotasTotals),
             totalPrice: (parseInt(product.price) / parseInt(product.quotasTotals)) * quotaQuantity,
             quotaQuantity: quotaQuantity,
-            description: product.description
+            description: product.description,
+            idReview: reviewIdCreated
         };
 
         fetch(url, {
@@ -248,29 +260,26 @@ function buyQuota(product, quotaQuantity) {
 }
 
 // Função que aciona as duas funções de forma independente
-function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
-    showLoading();
-    Promise.allSettled([
-        sendReviewToProduct(productId),
-        isFully ? sendGiftFully(product) : buyQuota(product, quotaQuantity)
-    ])
-        .then(results => {
-            // Lida com o resultado de cada promessa
-            results.forEach((result, index) => {
-                if (result.status === 'fulfilled') {
-                    if (result.value && result.value != null && result.value.includes('mercadopago')) {
-                        window.location.href = result.value;
-                    }
-                }
-            });
-            hideLoading()
+async function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
+    try {
+        showLoading();
+        
+        // Aguarda a criação do review e obtém o ID
+        const reviewIdCreated = await sendReviewToProduct(productId);
+        console.log(reviewIdCreated);
+        
+        // Executa a função apropriada de acordo com `isFully`
+        if (isFully) {
+            await sendGiftFully(product, reviewIdCreated);
+        } else {
+            await buyQuota(product, quotaQuantity, reviewIdCreated);
+        }
 
-            // Fecha o modal após ambas as operações concluírem
-            $('#reviewModal').modal('hide');
-        })
-        .catch(error => {
-            console.error('Erro ao processar as operações:', error);
-        });
+    } catch (error) {
+        console.error('Erro ao processar review e quota:', error);
+    } finally {
+        hideLoading(); // Esconde o loader quando o processo termina
+    }
 }
 
 // Função para obter o produto pelo ID
