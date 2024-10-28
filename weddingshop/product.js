@@ -198,6 +198,8 @@ function sendReviewToProduct(productId) {
         });
 
         const data = response.json();
+        
+        console.log("retorno da chamada de post review" + data);
         return getMostRecentReviewId(data); // Retorna o ID do review mais recente
 
     } catch (error) {
@@ -266,7 +268,6 @@ function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
         
         // Aguarda a criação do review e obtém o ID
         const reviewIdCreated = sendReviewToProduct(productId);
-        console.log(reviewIdCreated);
         
         // Executa a função apropriada de acordo com `isFully`
         if (isFully) {
