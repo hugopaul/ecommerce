@@ -250,7 +250,7 @@ function buyQuota(product, quotaQuantity, reviewIdCreated) {
         })
             .then(response => response.text())
             .then(data => {
-                resolve(data); // Sucesso
+                window.location.href = data;
             })
             .catch(error => {
                 console.error('Erro ao processar a compra das cotas:', error);
@@ -270,9 +270,9 @@ async function handleReviewAndQuota(productId, product, quotaQuantity, isFully) 
         
         // Executa a função apropriada de acordo com `isFully`
         if (isFully) {
-            await sendGiftFully(product, reviewIdCreated);
+            sendGiftFully(product, reviewIdCreated);
         } else {
-            await buyQuota(product, quotaQuantity, reviewIdCreated);
+            buyQuota(product, quotaQuantity, reviewIdCreated);
         }
 
     } catch (error) {
