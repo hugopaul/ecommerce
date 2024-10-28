@@ -177,7 +177,7 @@ function openReviewModal() {
     $('#reviewModal').modal('show');
 }
 // Função para enviar o review ao produto
-async function sendReviewToProduct(productId) {
+function sendReviewToProduct(productId) {
     const reviewerName = document.getElementById('reviewer-name').value;
     const reviewComment = document.getElementById('review-comment').value;
     const url = `${urlBase}/api/products/${productId}/reviews`;
@@ -189,7 +189,7 @@ async function sendReviewToProduct(productId) {
     };
 
     try {
-        const response = await fetch(url, {
+        const response = fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -197,7 +197,7 @@ async function sendReviewToProduct(productId) {
             body: JSON.stringify(body)
         });
 
-        const data = await response.json();
+        const data = response.json();
         return getMostRecentReviewId(data); // Retorna o ID do review mais recente
 
     } catch (error) {
@@ -260,12 +260,12 @@ function buyQuota(product, quotaQuantity, reviewIdCreated) {
 }
 
 // Função que aciona as duas funções de forma independente
-async function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
+function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
     try {
         showLoading();
         
         // Aguarda a criação do review e obtém o ID
-        const reviewIdCreated = await sendReviewToProduct(productId);
+        const reviewIdCreated = sendReviewToProduct(productId);
         console.log(reviewIdCreated);
         
         // Executa a função apropriada de acordo com `isFully`
