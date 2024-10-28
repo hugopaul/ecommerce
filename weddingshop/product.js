@@ -181,13 +181,13 @@ function sendReviewToProduct(productId) {
     const reviewerName = document.getElementById('reviewer-name').value;
     const reviewComment = document.getElementById('review-comment').value;
     const url = `${urlBase}/api/products/${productId}/reviews`;
-
+    console.log(url)
     const body = {
         name: reviewerName,
         comment: reviewComment,
         enable: false
     };
-
+    console.log(body)
     try {
         const response = fetch(url, {
             method: 'POST',
@@ -198,7 +198,6 @@ function sendReviewToProduct(productId) {
         });
 
         const data = response.json();
-        
         console.log("retorno da chamada de post review" + data);
         return getMostRecentReviewId(data); // Retorna o ID do review mais recente
 
@@ -268,7 +267,7 @@ function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
         
         // Aguarda a criação do review e obtém o ID
         const reviewIdCreated = sendReviewToProduct(productId);
-        
+        console.log(reviewIdCreated);
         // Executa a função apropriada de acordo com `isFully`
         if (isFully) {
             sendGiftFully(product, reviewIdCreated);
