@@ -65,7 +65,8 @@ async function renderProductDetail(productId) {
 
                 <!-- Botões Presentear e Comprar Cotas -->
                 <div class="d-flex">
-                    <button class="btn btn-primary me-2" id="gift-button">Presentear</button>
+                    <button class="btn btn-primary me-2" id="gift-button">Presentear</button>  
+                    <label for="quota-quantity" class="form-label"> <- Valor total/integral</label>
                     <!-- Caso deseje adicionar mais botões, eles podem ser inseridos aqui com espaçamento -->
                 </div>
             </div>
@@ -116,7 +117,7 @@ async function renderProductDetail(productId) {
     const quotaQuantityInput = document.getElementById('quota-quantity');
     const buyQuotaButton = document.getElementById('buy-quota-button');
 
-    if (isDisabled(quotasTotals)) {
+    if (isDisabled(quotasTotals, quotasPurchased)) {
         quotaQuantityInput.setAttribute('disabled', true);
         buyQuotaButton.setAttribute('disabled', true);
     } else {
@@ -127,8 +128,12 @@ async function renderProductDetail(productId) {
     renderRelatedProducts();
 }
 
-function isDisabled(quotasTotals) {
-    return quotasTotals == 1;
+function isDisabled(quotasTotals, quotasPurchased) {
+    if(quotasPurchased == quotasTotals){
+        return true
+    }else{
+        return quotasTotals == 1;
+    }
 }
 
 
