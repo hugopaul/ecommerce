@@ -65,7 +65,7 @@ async function renderProductDetail(productId) {
                 <!-- Botões Presentear e Comprar Cotas -->
                 <div class="d-flex align-items-center">
                     <button class="btn btn-primary me-2" id="gift-button">Presentear</button>  
-                    <i class="fa fa-arrow-left" aria-hidden="true"></i><label for="quota-quantity" class="form-label mb-0 ms-2"></i>  Valor total/integral</label>
+                    <i class="fa fa-arrow-left ml-3 mr-3" aria-hidden="true"></i><label for="quota-quantity" class="form-label mb-0 ms-2"></i>  Valor total/integral</label>
                 </div>
             </div>
         </div>
