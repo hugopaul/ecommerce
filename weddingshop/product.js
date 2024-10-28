@@ -62,12 +62,10 @@ async function renderProductDetail(productId) {
                         <button class="btn btn-primary" id="buy-quota-button">Presentear cotas</button>
                     </div>
                 </div>
-
                 <!-- Botões Presentear e Comprar Cotas -->
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
                     <button class="btn btn-primary me-2" id="gift-button">Presentear</button>  
-                    <label for="quota-quantity" class="form-label"> <- Valor total/integral</label>
-                    <!-- Caso deseje adicionar mais botões, eles podem ser inseridos aqui com espaçamento -->
+                    <label for="quota-quantity" class="form-label mb-0 ms-2">← Valor total/integral</label>
                 </div>
             </div>
         </div>
