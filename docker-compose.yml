@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "90:90"
+      - "90:80"
     restart: unless-stopped
     volumes:
       - ./:/usr/share/nginx/html
