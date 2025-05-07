@@ -1,83 +1,146 @@
 const urlBase = "https://solidtechsolutions.com.br";
 //const urlBase = "http://localhost:8080";
 
-// Custom JavaScript for index.html
+// Configurações
 const productsPerPage = 12;
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
 let filteredProducts = [];
 
+// Elementos do DOM
+const productContainer = document.getElementById('product-list');
+const paginationContainer = document.getElementById('pagination');
+const loadingScreen = document.getElementById('loading-screen');
+
+// Funções de controle de UI
 function showLoading() {
-    document.getElementById('loading-screen').style.display = 'flex';
+    if (loadingScreen) loadingScreen.style.display = 'flex';
 }
 
 function hideLoading() {
-    document.getElementById('loading-screen').style.display = 'none';
+    if (loadingScreen) loadingScreen.style.display = 'none';
 }
 
-function renderProducts(page, productsToRender = filteredProducts) {
+// Função principal de renderização de produtos
+async function renderProducts(page, productsToRender = filteredProducts) {
+    if (!productContainer) {
+        console.error('Container de produtos não encontrado no DOM');
+        return;
+    }
+
     const start = (page - 1) * productsPerPage;
     const end = start + productsPerPage;
     const productsToShow = productsToRender.slice(start, end);
 
-    const productContainer = document.getElementById('product-list');
+    // Limpa o container de produtos
     productContainer.innerHTML = '';
 
-    productsToShow.forEach(product => {
-        // Verifica se o valor de quotasTotals é maior que 1
-        const quotasDisponiveis = product.quotasTotals - product.quotasPurchased;
+    // Se não houver produtos, exibe mensagem
+    if (productsToShow.length === 0) {
+        productContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <h4>Nenhum produto encontrado</h4>
+                <p>Por favor, tente novamente mais tarde</p>
+            </div>
+        `;
+        return;
+    }
 
+    // Cria um fragmento de documento para otimização
+    const fragment = document.createDocumentFragment();
+
+    productsToShow.forEach(product => {
+        const quotasDisponiveis = product.quotasTotals - product.quotasPurchased;
         const quotasTotals = parseInt(product.quotasTotals, 10);
         const productPrice = parseFloat(product.price);
         const quotaValue = productPrice / quotasTotals;
-        const quotasInfo = quotasDisponiveis != 1
-            ? `<p class="card-text">${quotasDisponiveis} cotas de R$${quotaValue.toFixed(2).replace('.', ',')}</p>`
-            : `<p class="card-text">1 cota de R$${parseFloat(product.price).toFixed(2).replace('.', ',')}</p>`;
+        
+        const quotasInfo = quotasDisponiveis !== 1
+            ? `${quotasDisponiveis} cotas de R$${quotaValue.toFixed(2).replace('.', ',')}`
+            : `1 cota de R$${productPrice.toFixed(2).replace('.', ',')}`;
 
-        const productCard = `
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                    <div class="card-body">
-                    <h5 class="card-title">${product.name}</h5>
-                        ${quotasInfo} <!-- Exibe a informação das cotas apenas se quotasTotals > 1 -->
-                        <a href="product.html?id=${product.id}" class="btn btn-primary">Ver Produto</a>
-                    </div>
-                </div>
-            </div>
-        `;
-        productContainer.insertAdjacentHTML('beforeend', productCard);
+        // Cria elementos DOM diretamente para melhor performance
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col-lg-3 col-md-4 col-sm-6 mb-4';
+
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card h-100';
+
+        const img = document.createElement('img');
+        img.src = product.image;
+        img.alt = product.name;
+        img.className = 'card-img-top';
+        img.style.height = '200px';
+        img.loading = 'lazy'; // Otimização para carregamento
+
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body d-flex flex-column';
+
+        const title = document.createElement('h5');
+        title.className = 'card-title';
+        title.textContent = product.name;
+
+        const quotaText = document.createElement('p');
+        quotaText.className = 'card-text';
+        quotaText.textContent = quotasInfo;
+
+        const button = document.createElement('a');
+        button.href = `product.html?id=${product.id}`;
+        button.className = 'btn btn-primary mt-auto';
+        button.textContent = 'Ver Produto';
+
+        // Monta a estrutura do card
+        cardBody.appendChild(title);
+        cardBody.appendChild(quotaText);
+        cardBody.appendChild(button);
+        
+        cardDiv.appendChild(img);
+        cardDiv.appendChild(cardBody);
+        
+        colDiv.appendChild(cardDiv);
+        fragment.appendChild(colDiv);
     });
+
+    // Adiciona todos os produtos de uma vez ao DOM
+    productContainer.appendChild(fragment);
 }
 
+// Função de renderização da paginação
 function renderPagination(productsToRender = filteredProducts) {
+    if (!paginationContainer) return;
+
     const totalPages = Math.ceil(productsToRender.length / productsPerPage);
-    const paginationContainer = document.getElementById('pagination');
     paginationContainer.innerHTML = '';
 
-    for (let i = 1; i <= totalPages; i++) {
-        const paginationItem = `
-            <li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#product-list" data-page="${i}">${i}</a>
-            </li>
-        `;
-        paginationContainer.insertAdjacentHTML('beforeend', paginationItem);
-    }
+    // Cria um fragmento para a paginação
+    const fragment = document.createDocumentFragment();
 
-    // Adicionar evento de clique nos links de paginação
-    document.querySelectorAll('.page-link').forEach(link => {
-        link.addEventListener('click', (event) => {
+    for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+        li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+
+        const a = document.createElement('a');
+        a.className = 'page-link';
+        a.href = '#product-list';
+        a.dataset.page = i;
+        a.textContent = i;
+
+        a.addEventListener('click', (event) => {
             event.preventDefault();
-            currentPage = parseInt(event.target.getAttribute('data-page'));
+            currentPage = parseInt(event.target.dataset.page);
             localStorage.setItem('currentPage', currentPage);
             renderProducts(currentPage, productsToRender);
             renderPagination(productsToRender);
-
-            // Rolagem suave para o elemento product-list
-            document.getElementById('product-list').scrollIntoView({ behavior: 'smooth' });
+            productContainer.scrollIntoView({ behavior: 'smooth' });
         });
-    });
+
+        li.appendChild(a);
+        fragment.appendChild(li);
+    }
+
+    paginationContainer.appendChild(fragment);
 }
 
+// Funções de ordenação
 function sortProducts(criteria) {
     switch (criteria) {
         case 'alphabetical':
@@ -90,26 +153,28 @@ function sortProducts(criteria) {
             filteredProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
             break;
     }
-    currentPage = 1; // Voltar para a primeira página após ordenar
+    currentPage = 1;
     renderProducts(currentPage);
     renderPagination();
 }
 
-// Adicionar eventos aos botões de ordenação
-document.querySelectorAll('.sort-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const sortCriteria = button.getAttribute('data-sort');
-        sortProducts(sortCriteria);
+// Configura eventos de ordenação
+function setupSortButtons() {
+    document.querySelectorAll('.sort-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const sortCriteria = button.dataset.sort;
+            sortProducts(sortCriteria);
+        });
     });
-});
+}
 
+// Função principal para carregar produtos
 async function getAllProducts() {
-    const url = `${urlBase}/api/products`;
-
     try {
-        showLoading(); // Exibir a tela de carregamento
+        showLoading();
+        console.log('Iniciando carregamento de produtos...');
 
-        const response = await fetch(url, {
+        const response = await fetch(`${urlBase}/api/products`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -117,22 +182,41 @@ async function getAllProducts() {
         });
 
         if (!response.ok) {
-            throw new Error('Erro ao buscar os produtos');
+            throw new Error(`Erro HTTP: ${response.status}`);
         }
 
         const products = await response.json();
-        filteredProducts = products; // Atualiza a lista global de produtos filtrados
+        console.log(`Produtos recebidos: ${products.length} itens`);
 
-        // Renderizar produtos e paginação após carregar os produtos
+        filteredProducts = products;
+        
+        // Renderiza os produtos e paginação
         renderProducts(currentPage);
         renderPagination();
+        
+        // Configura os botões de ordenação
+        setupSortButtons();
+        
     } catch (error) {
-        console.error('Erro:', error);
-        alert('Houve um erro ao buscar os produtos.');
+        console.error('Falha ao carregar produtos:', error);
+        
+        // Exibe mensagem de erro no container de produtos
+        if (productContainer) {
+            productContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <h4 class="text-danger">Erro ao carregar produtos</h4>
+                    <p>${error.message}</p>
+                    <button onclick="getAllProducts()" class="btn btn-primary mt-3">Tentar novamente</button>
+                </div>
+            `;
+        }
     } finally {
-        hideLoading(); // Esconder a tela de carregamento após o carregamento
+        hideLoading();
     }
 }
 
-// Chamada inicial para buscar produtos e renderizar a página
-getAllProducts();
+// Inicialização quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM totalmente carregado');
+    getAllProducts();
+});

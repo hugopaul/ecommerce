@@ -61,7 +61,8 @@ body {
   line-height: 1.5;
   color: #818491;
   text-align: left;
-  background-color: #FFFFFF;
+  background: url(../img/background.png) repeat center center fixed;
+  background-size: cover;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
