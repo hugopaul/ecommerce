@@ -81,7 +81,7 @@ async function renderProductDetail(productId) {
                             </div>
                         </div>
                     `: ``).join('')
-            : '<p>Nenhuma avaliação disponível.</p>'}
+            : '<p>Nenhuma mensagem disponível.</p>'}
         </div>
 
         <!-- Produtos Relacionados -->
