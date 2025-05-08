@@ -37,7 +37,7 @@ async function renderProductDetail(productId) {
     const productDetail = `
         <div class="row align-items-start">
             <div class="col-md-6">
-                <img src="${product.image}" class="img-fluid rounded mb-3" alt="${product.name}">
+                <img src="./imagens/${product.image}" class="img-fluid rounded mb-3" alt="${product.name}">
             </div>
             <div class="col-md-6">
                 <h2 class="mb-2">${product.name}</h2>
@@ -326,7 +326,7 @@ async function renderRelatedProducts() {
         const relatedProductCard = `
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="${relatedProduct.image}" class="card-img-top" alt="${relatedProduct.name}">
+                    <img src="./imagens/${relatedProduct.image}" class="card-img-top" alt="${relatedProduct.name}">
                     <div class="card-body">
                     <h5 class="card-title">${relatedProduct.name}</h5>
                         ${quotasInfo} 

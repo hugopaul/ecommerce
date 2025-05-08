@@ -66,10 +66,9 @@ async function renderProducts(page, productsToRender = filteredProducts) {
         cardDiv.className = 'card h-100';
 
         const img = document.createElement('img');
-        img.src = product.image;
+        img.src = './imagens/'+product.image;
         img.alt = product.name;
         img.className = 'card-img-top';
-        img.style.height = '200px';
         img.loading = 'lazy'; // Otimização para carregamento
 
         const cardBody = document.createElement('div');
