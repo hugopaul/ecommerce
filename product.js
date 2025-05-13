@@ -115,13 +115,13 @@ async function renderProductDetail(productId) {
     const quotaQuantityInput = document.getElementById('quota-quantity');
     const buyQuotaButton = document.getElementById('buy-quota-button');
 
-    if (isDisabled(quotasTotals, quotasPurchased)) {
-        quotaQuantityInput.setAttribute('disabled', true);
-        buyQuotaButton.setAttribute('disabled', true);
-    } else {
+    //if (isDisabled(quotasTotals, quotasPurchased)) {
+    //    quotaQuantityInput.setAttribute('disabled', true);
+    //    buyQuotaButton.setAttribute('disabled', true);
+    //} else {
         quotaQuantityInput.removeAttribute('disabled');
         buyQuotaButton.removeAttribute('disabled');
-    }
+    //}
     // Carregar e renderizar produtos relacionados
     renderRelatedProducts();
 }
@@ -226,10 +226,10 @@ function buyQuota(product, quotaQuantity, reviewIdCreated) {
             return reject(new Error('Quantidade inválida'));
         }
 
-        if (quotaQuantity > (product.quotasTotals - product.quotasPurchased)) {
-            alert('A quantidade de cotas excede o número disponível.');
-            return reject(new Error('Cotas excedidas'));
-        }
+        //if (quotaQuantity > (product.quotasTotals - product.quotasPurchased)) {
+        //    alert('A quantidade de cotas excede o número disponível.');
+        //    return reject(new Error('Cotas excedidas'));
+        //}
         const url = `${urlBase}/api/payments`;
 
         const body = {
@@ -324,8 +324,8 @@ async function renderRelatedProducts() {
             ? `<p class="card-text">${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2).replace('.', ',')}</p>`
             : `<p class="card-text">1 cota de R$${parseFloat(relatedProduct.price).toFixed(2).replace('.', ',')}</p>`;
         const relatedProductCard = `
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100">
                     <img src="./imagens/${relatedProduct.image}" class="card-img-top" alt="${relatedProduct.name}">
                     <div class="card-body">
                     <h5 class="card-title">${relatedProduct.name}</h5>
