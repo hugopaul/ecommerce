@@ -10,7 +10,7 @@ function getQueryParam(param) {
 // Função para renderizar detalhes do produto
 async function renderProductDetail(productId) {
     const product = await getProductById(productId);
-    hideLoading()
+    hideLoading();
     const productDetailContainer = document.getElementById('product-detail');
 
     if (!product) {
@@ -55,7 +55,7 @@ async function renderProductDetail(productId) {
                 <p class="mb-4">${quotasPurchased} de ${quotasTotals} cotas adquiridas.</p>
 
                 <!-- Campo para selecionar quantidade de cotas -->
-               <div class="mb-4">
+                <div class="mb-4">
                     <label for="quota-quantity" class="form-label">Quantidade de cotas</label>
                     <div class="d-flex align-items-center">
                         <input type="tel" class="form-control" id="quota-quantity" min="1" max="${quotasTotals - quotasPurchased}" value="1" style="margin-right: 25px !important">
@@ -70,18 +70,22 @@ async function renderProductDetail(productId) {
             </div>
         </div>
 
-        <!-- Avaliações dos clientes -->
+        <!-- Mensagens dos clientes -->
         <div class="mt-5">
             <h3>Mensagens</h3>
-            ${filterReviews(product) ? product.reviews.map(review => review.enable ?
-        `<div class="media mb-4">
+            ${product.reviews && product.reviews.filter(review => review.enable).length > 0 ? 
+                product.reviews
+                    .filter(review => review.enable)
+                    .map(review => `
+                        <div class="media mb-4">
                             <div class="media-body">
-                                <h5 class="mt-0">${review.name}</h5>
-                                <p>${review.comment}</p>
+                                <h5 class="mt-0">${review.name || 'Anônimo'}</h5>
+                                <p>${review.comment || 'Sem mensagem'}</p>
+                                <small class="text-muted">${new Date(review.dataReview).toLocaleDateString()}</small>
                             </div>
                         </div>
-                    `: ``).join('')
-            : '<p>Nenhuma mensagem disponível.</p>'}
+                    `).join('')
+                : '<p>Nenhuma mensagem disponível.</p>'}
         </div>
 
         <!-- Produtos Relacionados -->
@@ -95,7 +99,7 @@ async function renderProductDetail(productId) {
 
     // Adicionar listener ao botão de presentear
     document.getElementById('gift-button').addEventListener('click', () => {
-        openReviewModal()
+        openReviewModal();
         document.getElementById('submit-review-button').addEventListener('click', () => {
             const quotaQuantity = parseInt(document.getElementById('quota-quantity').value, 10);
             handleReviewAndQuota(productId, product, quotaQuantity, true);
@@ -104,7 +108,7 @@ async function renderProductDetail(productId) {
 
     // Adicionar listener ao botão de comprar quotas
     document.getElementById('buy-quota-button').addEventListener('click', () => {
-        openReviewModal()
+        openReviewModal();
         document.getElementById('submit-review-button').addEventListener('click', () => {
             const quotaQuantity = parseInt(document.getElementById('quota-quantity').value, 10);
             handleReviewAndQuota(productId, product, quotaQuantity, false);
@@ -122,29 +126,17 @@ async function renderProductDetail(productId) {
         quotaQuantityInput.removeAttribute('disabled');
         buyQuotaButton.removeAttribute('disabled');
     //}
+
     // Carregar e renderizar produtos relacionados
     renderRelatedProducts();
 }
 
 function isDisabled(quotasTotals, quotasPurchased) {
-    if(quotasPurchased == quotasTotals){
-        return true
-    }else{
-        return quotasTotals == 1;
-    }
-}
-
-
-function filterReviews(product) {
-    if (product.reviews && product.reviews.length > 0) {
-        return product.reviews.some(review => review.enable === true); // Retorna true se ao menos uma review tiver enable = true
-    }
-    return false; // Retorna false se não houver avaliações ou se nenhuma tiver enable = true
+    return quotasPurchased === quotasTotals || quotasTotals === 1;
 }
 
 // Função para enviar pedido de presente
 function sendGiftFully(product, reviewIdCreated) {
-    
     const url = `${urlBase}/api/payments`;
     const body = {
         id: product.id,
@@ -161,33 +153,33 @@ function sendGiftFully(product, reviewIdCreated) {
         },
         body: JSON.stringify(body)
     })
-        .then(response => response.text())
-        .then(data => {
-            // Redireciona para a página de pagamento
-            window.location.href = data;
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Houve um erro ao enviar o pedido de presente.');
-        });
+    .then(response => response.text())
+    .then(data => {
+        window.location.href = data;
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Houve um erro ao enviar o pedido de presente.');
+    });
 }
 
-// Função para abrir o modal ao clicar nos botões de presentear ou comprar cotas
+// Função para abrir o modal de review
 function openReviewModal() {
     $('#reviewModal').modal('show');
 }
+
 // Função para enviar o review ao produto
 async function sendReviewToProduct(productId) {
     const reviewerName = document.getElementById('reviewer-name').value;
     const reviewComment = document.getElementById('review-comment').value;
     const url = `${urlBase}/api/products/${productId}/reviews`;
-    console.log(url)
+    
     const body = {
         name: reviewerName,
         comment: reviewComment,
         enable: false
     };
-    console.log(body)
+
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -198,12 +190,11 @@ async function sendReviewToProduct(productId) {
         });
 
         const data = await response.json();
-        console.log("retorno da chamada de post review", data);
-        return getMostRecentReviewId(data); // Retorna o ID do review mais recente
+        return getMostRecentReviewId(data);
 
     } catch (error) {
         console.error('Erro ao salvar mensagem:', error);
-        throw error; // Propaga o erro para o método de chamada
+        throw error;
     }
 }
 
@@ -217,7 +208,6 @@ function getMostRecentReviewId(data) {
     return mostRecentReview.id;
 }
 
-
 // Função para enviar pedido de compra de quotas
 function buyQuota(product, quotaQuantity, reviewIdCreated) {
     return new Promise((resolve, reject) => {
@@ -226,12 +216,7 @@ function buyQuota(product, quotaQuantity, reviewIdCreated) {
             return reject(new Error('Quantidade inválida'));
         }
 
-        //if (quotaQuantity > (product.quotasTotals - product.quotasPurchased)) {
-        //    alert('A quantidade de cotas excede o número disponível.');
-        //    return reject(new Error('Cotas excedidas'));
-        //}
         const url = `${urlBase}/api/payments`;
-
         const body = {
             id: product.id,
             name: product.name,
@@ -249,14 +234,15 @@ function buyQuota(product, quotaQuantity, reviewIdCreated) {
             },
             body: JSON.stringify(body)
         })
-            .then(response => response.text())
-            .then(data => {
-                window.location.href = data;
-            })
-            .catch(error => {
-                console.error('Erro ao processar a compra das cotas:', error);
-                reject(error); // Falha
-            });
+        .then(response => response.text())
+        .then(data => {
+            window.location.href = data;
+            resolve();
+        })
+        .catch(error => {
+            console.error('Erro ao processar a compra das cotas:', error);
+            reject(error);
+        });
     });
 }
 
@@ -264,21 +250,19 @@ function buyQuota(product, quotaQuantity, reviewIdCreated) {
 async function handleReviewAndQuota(productId, product, quotaQuantity, isFully) {
     try {
         showLoading();
-        
-        // Aguarda a criação do review e obtém o ID
         const reviewIdCreated = await sendReviewToProduct(productId);
-        console.log(reviewIdCreated);
-        // Executa a função apropriada de acordo com `isFully`
+        
         if (isFully) {
             sendGiftFully(product, reviewIdCreated);
         } else {
-            buyQuota(product, quotaQuantity, reviewIdCreated);
+            await buyQuota(product, quotaQuantity, reviewIdCreated);
         }
 
     } catch (error) {
         console.error('Erro ao processar review e quota:', error);
+        alert('Ocorreu um erro ao processar sua solicitação.');
     } finally {
-        hideLoading(); // Esconde o loader quando o processo termina
+        hideLoading();
     }
 }
 
@@ -301,6 +285,7 @@ async function getProductById(productId) {
     } catch (error) {
         console.error('Erro:', error);
         alert('Houve um erro ao buscar o produto.');
+        return null;
     }
 }
 
@@ -316,20 +301,17 @@ async function renderRelatedProducts() {
 
     relatedProducts.slice(0, 4).forEach(relatedProduct => {
         const quotasDisponiveis = relatedProduct.quotasTotals - relatedProduct.quotasPurchased;
-
         const quotasTotals = parseInt(relatedProduct.quotasTotals, 10);
         const productPrice = parseFloat(relatedProduct.price);
         const quotaValue = productPrice / quotasTotals;
-        const quotasInfo = quotasDisponiveis != 1
-            ? `<p class="card-text">${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2).replace('.', ',')}</p>`
-            : `<p class="card-text">1 cota de R$${parseFloat(relatedProduct.price).toFixed(2).replace('.', ',')}</p>`;
+        
         const relatedProductCard = `
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100">
                     <img src="./imagens/${relatedProduct.image}" class="card-img-top" alt="${relatedProduct.name}">
                     <div class="card-body">
-                    <h5 class="card-title">${relatedProduct.name}</h5>
-                        ${quotasInfo} 
+                        <h5 class="card-title">${relatedProduct.name}</h5>
+                        <p class="card-text">${quotasDisponiveis} cotas de R$ ${quotaValue.toFixed(2).replace('.', ',')}</p>
                         <a href="product.html?id=${relatedProduct.id}" class="btn btn-primary">Ver Produto</a>
                     </div>
                 </div>
@@ -365,13 +347,11 @@ function showLoading() {
     document.getElementById('loading-screen').style.display = 'flex';
 }
 
-
 function hideLoading() {
     document.getElementById('loading-screen').style.display = 'none';
 }
 
-
-// Obtém o ID do produto da URL e renderiza os detalhes do produto
+// Inicialização
 const productId = getQueryParam('id');
 
 if (productId) {
@@ -382,20 +362,3 @@ if (productId) {
         <a href="index.html" class="btn btn-primary">Ir para Home</a>
     `;
 }
-
-
-
-
-//window.addEventListener('scroll', () => {
-//    const footer = document.getElementById('reserved-rights');
-//    const floatingButtons = document.getElementById('floating-buttons');
-//    const footerRect = footer.getBoundingClientRect();
-//    const windowHeight = window.innerHeight;
-//
-//    // Se o footer estiver visível
-//    if (footerRect.top < windowHeight && footerRect.bottom >= 0) {
-//        floatingButtons.style.bottom = `${footerRect.height}px`; // Sobe o botão flutuante até o topo do footer
-//    } else {
-//        floatingButtons.style.bottom = '0'; // Volta a posição original
-//    }
-//});
